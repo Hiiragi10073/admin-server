@@ -6,7 +6,16 @@ const path = require('path');
 const formidable = require('formidable')
 
 const tempData = require('../mockData/mockTemp');
-const { login, getUserData, getMenuData, updateUserData } = require('../sqlite/getData');
+const {
+  login,
+  getUserData,
+  getMenuData,
+  updateUserData,
+  getCategoryData,
+  addCategoryData,
+  updateCategoryData,
+  deleteCategoryData,
+} = require('../sqlite/getData');
 
 // 测试数据
 router.get('/user', (req, res) => {
@@ -136,5 +145,70 @@ router.post('/updateUser', (req, res) => {
     })
   })
 })
+
+// 获取文章分类
+router.get('/getCategory', (req, res) => {
+  getCategoryData((err, data) => {
+    if (err) {
+      throw err;
+    } else {
+      res.json({
+        status: 200,
+        message: '获取分类成功',
+        data,
+      })
+    }
+  });
+});
+
+// 新增文章分类
+router.post('/updateCategory', (req, res) => {
+  if (req.body.id) {
+    updateCategoryData(req.body.id, req.body, err => {
+      if (err) {
+        res.json({
+          status: 401,
+          message: '编辑分类失败，请检查属性'
+        });
+        return;
+      }
+      res.json({
+        status: 200,
+        message: '编辑分类成功'
+      });
+    });
+  } else {
+    addCategoryData(req.body, (err) => {
+      if (err) {
+        res.json({
+          status: 401,
+          message: '新增分类失败，请检查属性'
+        });
+        return;
+      }
+      res.json({
+        status: 200,
+        message: '新增分类成功'
+      });
+    });
+  }
+});
+
+// 删除文章分类
+router.get('/deleteCategory/:id', (req, res) => {
+  deleteCategoryData(req.params.id, err => {
+    if (err) {
+      res.json({
+        status: 401,
+        message: '删除分类失败，请检查属性'
+      });
+      return;
+    }
+    res.json({
+      status: 200,
+      message: '删除分类成功'
+    });
+  });
+});
 
 module.exports = router;
