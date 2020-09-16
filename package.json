@@ -8,10 +8,9 @@
     "express-jwt": "^6.0.0",
     "formidable": "^1.2.2",
     "jsonwebtoken": "^8.5.1",
-    "mockjs": "^1.1.0",
     "sqlite3": "^5.0.0"
   },
   "scripts": {
-    "serve": "nodemon ./MockServer.js"
+    "serve": "nodemon ./app.js"
   }
 }
