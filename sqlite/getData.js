@@ -103,13 +103,9 @@ module.exports.addPostData = (data, callback) => {
 }
 
 // 获取博客列表
-module.exports.getPostList = (category, callback) => {
-  db.run(
-    'select * from blog where category = ?',
-    category,
-    callback
-  );
-};
+module.exports.getBlogList = (category, callback) => {
+  db.run('select * from blog where category = ?', category, callback)
+}
 
 // 上传博客
 module.exports.addBlogPost = (data, callback) => {

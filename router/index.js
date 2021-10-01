@@ -19,8 +19,9 @@ const {
   deletePostData,
   updatePostData,
   addPostData,
+  getBlogList,
   getBlogPost,
-  addBlogPost,
+  addBlogPost
 } = require('../sqlite/getData')
 
 // 登录
