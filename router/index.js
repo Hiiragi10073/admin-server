@@ -19,7 +19,9 @@ const {
   deletePostData,
   updatePostData,
   addPostData,
-} = require('../sqlite/getData');
+  getBlogPost,
+  addBlogPost,
+} = require('../sqlite/getData')
 
 // 登录
 router.post('/login', (req, res) => {
