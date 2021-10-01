@@ -21,11 +21,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use(expressJwt({
   secret: 'hiiragi10073',
   algorithms: ['HS256']
-}).unless({
-  path: ['/login'],
 }));
 
 app.use((err, req, res, next) => {
+  if (req.originalUrl.indexOf('/login') > -1) {
+    return next();
+  }
   if (err.name === 'UnauthorizedError') {
     res.status(401).send({ code: -1, message: '登录信息已失效，请重新登录' });
   } else {

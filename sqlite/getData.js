@@ -90,7 +90,6 @@ module.exports.updatePostData = (data, callback) => {
 
 // 发布文章
 module.exports.addPostData = (data, callback) => {
-  console.log(data);
   db.run(
     'insert into post (title, content, cover, star, unlike, category_id) values (?, ?, ?, ?, ?, ?)',
     data.title,
@@ -102,3 +101,33 @@ module.exports.addPostData = (data, callback) => {
     callback
   )
 }
+
+// 获取博客列表
+module.exports.getPostList = (category, callback) => {
+  db.run(
+    'select * from blog where category = ?',
+    category,
+    callback
+  );
+};
+
+// 上传博客
+module.exports.addBlogPost = (data, callback) => {
+  db.run(
+    'insert into blog (title, url, category) values (?, ?, ?)',
+    data.title,
+    data.url,
+    data.url,
+    data.category,
+    callback
+  );
+};
+
+// 获取博客内容
+module.exports.getBlogPost = (id, callback) => {
+  db.run(
+    'select * from blog where id = ?',
+    id,
+    callback
+  );
+};
