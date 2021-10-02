@@ -28,7 +28,7 @@ router.post('/upload', (req, res) => {
     } else if (fileType === 'image') {
       targetDir = process.env.IMAGE_PATH
     }
-    const filePath = process.env.TEMP_PATH + file.path
+    const filePath = file.path
     const fileName = uuid() + '_' + file.name
     const targetFile = path.join(targetDir, fileName)
 
