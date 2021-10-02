@@ -129,48 +129,6 @@ router.get('/deletePost/:id', (req, res) => {
   })
 })
 
-// 上传文章封面
-router.post('/uploadPostCover', (req, res) => {
-  const form = new formidable.IncomingForm()
-  form.uploadDir = path.join(__dirname, 'temp')
-  form.keepExtensions = true
-  form.parse(req, (err, fields, files) => {
-    if (err) {
-      res.json({
-        status: 401,
-        message: '图片上传失败'
-      })
-      return
-    }
-    const targetDir = path.join(__dirname, '../assets/post')
-    const filePath = files.file.path.substring(files.file.path.lastIndexOf('/'))
-    const fileName = 'post_cover_' + Date.now() + '.jpg'
-    const targetFile = path.join(targetDir, fileName)
-
-    fs.rename(filePath, targetFile, (err) => {
-      if (err) {
-        res.json({
-          status: 401,
-          message: '图片保存失败'
-        })
-        return
-      }
-      res.json({
-        status: 200,
-        message: '图片保存成功',
-        filePath: '/post/' + fileName
-      })
-    })
-  })
-
-  form.on('error', (err) => {
-    res.json({
-      status: 401,
-      message: '图片保存失败'
-    })
-  })
-})
-
 // 更新文章
 router.post('/updatePost', (req, res) => {
   updatePostData(req.body, (err) => {

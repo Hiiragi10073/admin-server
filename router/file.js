@@ -3,6 +3,7 @@ const router = express.Router()
 const fs = require('fs')
 const path = require('path')
 const formidable = require('formidable')
+const { v4: uuid} = require('uuid')
 
 // 文件
 router.post('/upload', (req, res) => {
@@ -17,26 +18,38 @@ router.post('/upload', (req, res) => {
       })
       return
     }
-    const targetDir = path.join(__dirname, '../assets/postHtml')
-    const filePath = files.fileName[path].substring(
-      files.fileName.path.lastIndexOf('/')
-    )
-    const fileName = 'postHtml_' + Date.now() + '.html'
+    const file = files.file
+    const type = file.type.split('/')
+    const etc = type.pop()
+    const fileType = type.pop()
+    let targetDir
+    if (etc === 'html') {
+      targetDir = process.env.BLOG_FILE_PATH
+    } else if (fileType === 'image') {
+      targetDir = process.env.IMAGE_PATH
+    }
+    const filePath = file.path.substring(file.path.lastIndexOf('/'))
+    const fileName = uuid() + '_' + file.name
     const targetFile = path.join(targetDir, fileName)
 
     fs.rename(filePath, targetFile, (err) => {
       if (err) {
+        console.log(err)
         res.json({
           status: 401,
-          message: '图片保存失败'
+          message: '文件上传失败'
         })
         return
       }
+      const fileUrl =
+        process.env.FILE_URL + '/' + targetDir.split('/').pop() + '/' + fileName
       res.json({
         status: 200,
-        message: '图片保存成功',
-        filePath: '/postHtml/' + fileName
+        message: '文件上传成功',
+        url: fileUrl
       })
     })
   })
 })
+
+module.exports = router

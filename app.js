@@ -2,6 +2,7 @@ const express = require('express')
 const router = require('./router/user')
 const postRouter = require('./router/post')
 const blogRouter = require('./router/blog')
+const fileRouter = require('./router/file')
 const expressJwt = require('express-jwt')
 const path = require('path')
 
@@ -51,6 +52,7 @@ app.use((err, req, res, next) => {
 app.use('/', router)
 app.use('/post', postRouter)
 app.use('/blog', blogRouter)
+app.use('/file', fileRouter)
 
 app.listen('8090', () => {
   console.log('服务器已开启，端口：8090')
