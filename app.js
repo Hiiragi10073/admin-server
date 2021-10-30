@@ -1,6 +1,5 @@
 const express = require('express')
 const router = require('./router/user')
-const postRouter = require('./router/post')
 const blogRouter = require('./router/blog')
 const fileRouter = require('./router/file')
 const expressJwt = require('express-jwt')
@@ -53,7 +52,6 @@ app.use((err, req, res, next) => {
 })
 
 app.use('/', router)
-app.use('/post', postRouter)
 app.use('/blog', blogRouter)
 app.use('/file', fileRouter)
 
