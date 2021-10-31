@@ -9,6 +9,7 @@ const {
   deleteCategoryData,
   getBlogListData,
   getBlogListCount,
+  getBlogById,
   deleteBlogData,
   updateBlogData
 } = require('../controller/blog')
@@ -106,6 +107,24 @@ router.get('/list', (req, res) => {
         data,
         total
       })
+    })
+  })
+})
+
+// 根据id获取文章
+router.get('/:id', (req, res) => {
+  getBlogById(req.params.id, (err, data) => {
+    if (err) {
+      res.json({
+        status: 401,
+        message: '获取博客失败，请检查参数'
+      })
+      return;
+    }
+    res.json({
+      status: 200,
+      message: '博客获取成功',
+      data: data[0]
     })
   })
 })

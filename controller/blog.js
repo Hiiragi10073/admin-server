@@ -86,9 +86,18 @@ module.exports.getBlogListCount = (config, callback) => {
   }
 }
 
+// 根据id获取博客
+module.exports.getBlogById = (id, callback) => {
+  db.all(
+    'select * from blog where id = ?',
+    id,
+    callback
+  )
+}
+
 // 删除文章
-module.exports.deleteBlogData = (keyword, callback) => {
-  db.run('delete from blog where id =?', keyword, callback)
+module.exports.deleteBlogData = (id, callback) => {
+  db.run('delete from blog where id =?', id, callback)
 }
 
 // 更新文章
