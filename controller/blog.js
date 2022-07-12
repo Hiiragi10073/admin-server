@@ -42,7 +42,8 @@ module.exports.getBlogListData = (config, callback) => {
   isDef(keyword) &&
     params.push({ str: 'content like ?', value: `%${keyword}%` });
   isDef(categoryId) &&
-    params.push({ str: 'categoryId = ?', value: categoryId });
+    categoryId !== '0' &&
+    params.push({ str: 'categoryId = ?', value: categoryId })
   params.push({ str: 'limit ?', value: isDef(limit) ? limit : 10 });
   params.push({ str: 'offset ?', value: isDef(offset) ? offset : 0 });
 
@@ -64,7 +65,7 @@ module.exports.getBlogListCount = (config, callback) => {
   const { keyword, categoryId } = config;
 
   keyword && params.push({ str: 'content like ?', value: `%${keyword}%` });
-  categoryId && params.push({ str: 'categoryId = ?', value: categoryId });
+  categoryId && categoryId !== '0' && params.push({ str: 'categoryId = ?', value: categoryId });
 
   if (params.length > 0) {
     sqlStr += ' where';
